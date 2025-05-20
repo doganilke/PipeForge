@@ -1,0 +1,20 @@
+name: Build and Test with Docker
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t clustering-app .
+
+      - name: Run built binary
+        run: docker run --rm clustering-app ./build/bin/ClusteringRows --help
